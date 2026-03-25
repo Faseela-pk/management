@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Staff Dashboard - EduManage{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2 class="fw-bold">Staff Dashboard</h2>
+        <p class="text-muted">Welcome, {{ user.first_name|default:user.username }}. Here are the students in your department.</p>
+        <a href="{% url 'student_list' %}" class="btn btn-primary mb-3 shadow-sm px-4 rounded-pill">Manage Students</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow border-0">
+            <div class="card-body p-0">
+                <table class="table table-hover table-borderless mb-0">
+                    <thead class="bg-light border-bottom">
+                        <tr>
+                            <th class="ps-4">Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th class="pe-4 text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td class="ps-4 align-middle fw-bold">{{ student.user.get_full_name|default:student.user.username }}</td>
+                            <td class="align-middle text-muted">{{ student.user.email }}</td>
+                            <td class="align-middle"><span class="badge bg-secondary">{{ student.department.name|default:"Not assigned" }}</span></td>
+                            <td class="pe-4 text-end align-middle">
+                                <a href="{% url 'student_update' student.user.pk %}" class="btn btn-sm btn-outline-primary shadow-sm rounded-pill px-3">Edit Profile</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted fst-italic">No students found in your department.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

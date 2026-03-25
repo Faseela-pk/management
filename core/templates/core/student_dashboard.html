@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% block title %}Student Dashboard - EduManage{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="card shadow border-0">
+            <div class="card-header bg-white pb-0 border-0 pt-4 text-center">
+                <h3 class="mb-0 fw-bold text-primary">Student Profile</h3>
+                <p class="text-muted small">Your academic details</p>
+            </div>
+            <div class="card-body p-4 pt-2">
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted fw-bold text-end">Name:</div>
+                    <div class="col-sm-8">{{ user.get_full_name|default:user.username }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted fw-bold text-end">Email:</div>
+                    <div class="col-sm-8">{{ user.email }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted fw-bold text-end">Department:</div>
+                    <div class="col-sm-8">
+                        {% if student_profile and student_profile.department %}
+                            <span class="badge bg-info text-dark">{{ student_profile.department.name }}</span>
+                        {% else %}
+                            <span class="text-warning fst-italic">Not assigned</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted fw-bold text-end">Assigned Staff:</div>
+                    <div class="col-sm-8">
+                        {% if student_profile and student_profile.assigned_staff %}
+                            {{ student_profile.assigned_staff.user.get_full_name|default:student_profile.assigned_staff.user.username }}
+                        {% else %}
+                            <span class="text-warning fst-italic">Not assigned</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="text-center mt-4 border-top pt-4">
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary shadow-sm px-5 rounded-pill">View Account Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

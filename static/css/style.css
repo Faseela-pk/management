@@ -1,0 +1,12 @@
+/* Custom Application Styles */
+body.bg-light {
+    background-color: #f4f6f9 !important;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+.card {
+    border-radius: 12px;
+}
